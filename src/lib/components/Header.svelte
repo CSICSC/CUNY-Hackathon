@@ -21,6 +21,7 @@
         position: fixed; /* position varies */
         width: 100%;
         height: 5vh;
+        background-image: linear-gradient(to bottom,rgb(151, 151, 151),transparent);
         // background-color: #F5E5B0;
 
         .site-id {
