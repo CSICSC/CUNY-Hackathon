@@ -19,10 +19,9 @@
         justify-content: space-between;
         align-items: center;
         position: fixed; /* position varies */
-        border-bottom: 1px solid black;
         width: 100%;
         height: 5vh;
-        background-color: #F5E5B0;
+        // background-color: #F5E5B0;
 
         .site-id {
             display: flex;
