@@ -83,6 +83,7 @@
             flex-direction: column;
             align-items: center;
             backdrop-filter: blur(4px);
+            // background-color: rgba(0, 30, 128, 0.424);
 
             h1 {
                 margin-top: 5%;
