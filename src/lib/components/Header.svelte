@@ -21,7 +21,7 @@
         position: fixed; /* position varies */
         width: 100%;
         height: 5vh;
-        background-image: linear-gradient(to bottom,rgb(151, 151, 151),transparent);
+        background-image: linear-gradient(to bottom,rgba(151, 151, 151, 0.599),transparent);
         // background-color: #F5E5B0;
 
         .site-id {
@@ -42,7 +42,6 @@
                 width: 60%;
 
                 li {
-                    font-family: Arial, Helvetica, sans-serif;
                     font-size: 20px;
                     font-weight: bold;
                     list-style-type: none;
