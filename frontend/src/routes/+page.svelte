@@ -5,11 +5,20 @@
 	import logo2 from '$images/logo2.png';
 
 	const host = 'ws://localhost:3005';
-	onMount(() => {
+
+	onMount(async () => {
 		socket = new WebSocket(host);
-		socket.addEventListener('open', async () => {
-			// send appID to another route to send ip
+		let response = await fetch('http://localhost:3005/init', {
+			method: 'POST',
+			mode: 'same-origin',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ siteID: appID })
 		});
+
+		response = response.json();
+		console.log(response);
 	});
 
 	let selected = 'email';
