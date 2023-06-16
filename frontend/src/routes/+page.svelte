@@ -8,6 +8,8 @@
 
 	const ws_host = 'ws://localhost:3005';
 
+	// add regex for discord username
+
 	onMount(async () => {
 		socket = new WebSocket(ws_host);
 
@@ -50,15 +52,19 @@
 
 	async function handleEmailSend() {
 		if (
-			textInput === '' ||
-			!textInput
-				.toLowerCase()
-				.match(
-					/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-				)
+			(textInput === '' ||
+				!textInput
+					.toLowerCase()
+					.match(
+						/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+					)) &&
+			selected === 'email'
 		) {
 			throw_invalid_email_error = true;
 			textInput = '';
+			setTimeout(() => {
+				throw_invalid_email_error = false;
+			});
 			return;
 		}
 
@@ -88,6 +94,18 @@
 			setTimeout(() => {
 				friend_added = false;
 			}, 2000);
+
+			let response = await fetch(`${http_host}/friends`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					input: textInput,
+					type: selected,
+					cookie: window.localStorage.getItem('id')
+				})
+			});
 		}
 
 		textInput = '';
@@ -112,12 +130,16 @@
 					class="email"
 					on:click={() => {
 						selected = 'email';
+						textInput = '';
+						throw_invalid_email_error = false;
 					}}>Email</button
 				>
 				<button
 					class="discord"
 					on:click={() => {
 						selected = 'discord';
+						textInput = '';
+						throw_invalid_email_error = false;
 					}}>Discord</button
 				>
 			</div>
