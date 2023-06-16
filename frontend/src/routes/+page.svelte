@@ -8,17 +8,30 @@
 
 	onMount(async () => {
 		socket = new WebSocket(host);
+
+		socket.addEventListener('message', (data) => {
+			console.log(data);
+		});
+
 		let response = await fetch('http://localhost:3005/init', {
 			method: 'POST',
-			mode: 'same-origin',
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({ siteID: appID })
 		});
 
-		response = response.json();
-		console.log(response);
+		response = await response.json();
+
+		window.localStorage.setItem('id', response.conn_id);
+
+		setInterval(() => {
+			socket.send(JSON.stringify({ cookie: window.localStorage.getItem('id') }));
+		}, 5000);
+
+		return () => {
+			socket.close();
+		};
 	});
 
 	let selected = 'email';
