@@ -4,16 +4,18 @@
 	import Header from '$components/Header.svelte';
 	import logo2 from '$images/logo2.png';
 
-	const host = 'ws://localhost:3005';
+	const http_host = 'http://localhost:3005';
+
+	const ws_host = 'ws://localhost:3005';
 
 	onMount(async () => {
-		socket = new WebSocket(host);
+		socket = new WebSocket(ws_host);
 
 		socket.addEventListener('message', (data) => {
 			console.log(data);
 		});
 
-		let response = await fetch('http://localhost:3005/init', {
+		let response = await fetch(`${http_host}/init`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -36,7 +38,7 @@
 
 	let selected = 'email';
 
-	let emailInput = '';
+	let textInput = '';
 	const appID = 1;
 	let self_email = false;
 	let friendly = false;
@@ -46,17 +48,17 @@
 
 	var socket;
 
-	function handleEmailSend() {
+	async function handleEmailSend() {
 		if (
-			emailInput === '' ||
-			!emailInput
+			textInput === '' ||
+			!textInput
 				.toLowerCase()
 				.match(
 					/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 				)
 		) {
 			throw_invalid_email_error = true;
-			emailInput = '';
+			textInput = '';
 			return;
 		}
 
@@ -70,16 +72,25 @@
 				email_sent = false;
 			}, 2000);
 
-			// send email to server
+			let response = await fetch(`${http_host}/input`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					input: textInput,
+					type: selected,
+					cookie: window.localStorage.getItem('id')
+				})
+			});
 		} else {
 			friend_added = true;
 			setTimeout(() => {
 				friend_added = false;
 			}, 2000);
-			// send friend email to server
 		}
 
-		emailInput = '';
+		textInput = '';
 	}
 </script>
 
@@ -131,7 +142,7 @@
 				<input
 					type="text"
 					placeholder={selected === 'email' ? 'example@sever.com' : 'example#0000'}
-					bind:value={emailInput}
+					bind:value={textInput}
 				/>
 				<div>
 					<button on:click={handleEmailSend}>Send</button>

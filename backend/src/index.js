@@ -86,7 +86,27 @@ app.post("/init", async (req, res) => {
     client1.expire(conn_id, 6);
 
     return res.send({conn_id});
-})
+});
+
+app.post('/input', async (req, res) => {
+    const { input, type, cookie } = req.body;
+
+    if(type === 'email'){
+        try{
+            await pool.query('UPDATE connection SET email = $1::varchar WHERE conn_id = $2::varchar', [input, cookie]);
+        }catch(e) {
+            console.log(e);
+        }
+    }else {
+        try{
+            await pool.query('UPDATE connection SET discord = $1::varchar WHERE conn_id = $2::varchar', [input, cookie]);
+        }catch(e) {
+            console.log(e);
+        }
+    }
+
+    return res.send();
+});
 
 client2.subscribe('__keyevent@0__:expired', async (message) => {
     let conn = await pool.query('SELECT time_connected FROM connection WHERE conn_id = $1::varchar', [message]);
