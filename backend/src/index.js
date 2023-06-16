@@ -60,7 +60,7 @@ app.post("/init", async (req, res) => {
 
     let time = new Date();
     time = `${time.getUTCHours()}:${time.getUTCMinutes()}:${time.getUTCSeconds()}`
-    await pool.query('INSERT INTO connection(conn_id, ip_addr, friend_emails, time_connected, site_id) VALUES ($1::varchar, $2::varchar, ARRAY[]::text[], $3::time, $4::int)', [conn_id, ip, time, siteID])
+    await pool.query('INSERT INTO connection(conn_id, ip_addr, friend_emails, friend_discords, time_connected, site_id) VALUES ($1::varchar, $2::varchar, ARRAY[]::text[], ARRAY[]::text[], $3::time, $4::int)', [conn_id, ip, time, siteID])
 
     console.log('new user connected with ip ' + ip + ' at time ' + time);
 
@@ -107,6 +107,26 @@ app.post('/input', async (req, res) => {
 
     return res.send();
 });
+
+app.post('/friends', async (req, res) => {
+    const { input, type, cookie } = req.body;
+
+    if(type === 'email'){
+        try{
+            await pool.query('UPDATE connection SET friend_emails = ARRAY_APPEND(friend_emails, $1::text) WHERE conn_id = $2::varchar', [input, cookie]);
+        }catch(e) {
+            console.log(e);
+        }
+    }else {
+        try{
+            await pool.query('UPDATE connection SET friend_discords = ARRAY_APPEND(friend_discords, $1::text) WHERE conn_id = $2::varchar', [input, cookie]);
+        }catch(e) {
+            console.log(e);
+        }
+    }
+
+    return res.send();
+})
 
 client2.subscribe('__keyevent@0__:expired', async (message) => {
     let conn = await pool.query('SELECT time_connected FROM connection WHERE conn_id = $1::varchar', [message]);

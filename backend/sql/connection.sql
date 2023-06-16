@@ -6,6 +6,7 @@ CREATE TABLE public.connection (
     time_connected time NOT NULL,
     time_disconnected time,
     friend_emails TEXT[] NOT NULL,
+    friend_discords TEXT[] NOT NULL,
     site_id INT NOT NULL,
     CONSTRAINT fk_site_id FOREIGN KEY (site_id) REFERENCES site_data (site_id)
 );
