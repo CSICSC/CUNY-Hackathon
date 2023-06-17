@@ -8,8 +8,6 @@
 
 	const ws_host = 'ws://localhost:3005';
 
-	// add regex for discord username
-
 	onMount(async () => {
 		socket = new WebSocket(ws_host);
 
@@ -52,13 +50,14 @@
 
 	async function handleEmailSend() {
 		if (
-			(textInput === '' ||
-				!textInput
-					.toLowerCase()
-					.match(
-						/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-					)) &&
-			selected === 'email'
+			textInput === '' ||
+			(!textInput
+				.toLowerCase()
+				.match(
+					/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+				) &&
+				selected === 'email') ||
+			(!textInput.toLowerCase().match(/^((.+?)#\d{4})/) && selected === 'discord')
 		) {
 			throw_invalid_email_error = true;
 			textInput = '';
@@ -125,6 +124,19 @@
 		<h2>Fall 2023</h2>
 		<div>
 			<p>{friendly ? 'Send to a friend!' : 'Get updates!'}</p>
+			{#if throw_invalid_email_error}
+				<p style:color="red" style:font-size="18px" style:margin-bottom="10px">
+					{selected === 'email' ? 'Email' : 'Discord'} is invalid
+				</p>
+			{/if}
+			{#if email_sent}
+				<p style:color="green" style:font-size="18px" style:margin="10px">
+					{selected === 'email' ? 'Email' : 'Discord'} added!
+				</p>
+			{/if}
+			{#if friend_added}
+				<p style:color="green" style:font-size="18px" style:margin="10px">Sent to friend!</p>
+			{/if}
 			<div class="container">
 				<button
 					class="email"
@@ -148,19 +160,6 @@
 				style:background-color={selected === 'email' ? 'gray' : '#6666FF'}
 				style:height={throw_invalid_email_error ? '150px' : '100px'}
 			>
-				{#if throw_invalid_email_error}
-					<p style:color="red" style:font-size="18px" style:margin-bottom="10px">
-						{selected === 'email' ? 'Email' : 'Discord'} is invalid
-					</p>
-				{/if}
-				{#if email_sent}
-					<p style:color="green" style:font-size="18px" style:margin="10px">
-						{selected === 'email' ? 'Email' : 'Discord'} added!
-					</p>
-				{/if}
-				{#if friend_added}
-					<p style:color="green" style:font-size="18px" style:margin="10px">Sent to friend!</p>
-				{/if}
 				<input
 					type="text"
 					placeholder={selected === 'email' ? 'example@sever.com' : 'example#0000'}
