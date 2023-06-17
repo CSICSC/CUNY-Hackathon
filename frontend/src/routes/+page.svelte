@@ -111,6 +111,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>CUNY Hacks 2023</title>
+</svelte:head>
+
 <Header>
 	<div class="header-container">
 		<img class="logo" src={logo2} alt="logo" />
