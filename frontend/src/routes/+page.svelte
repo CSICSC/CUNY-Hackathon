@@ -63,7 +63,7 @@
 			textInput = '';
 			setTimeout(() => {
 				throw_invalid_email_error = false;
-			});
+			}, 2000);
 			return;
 		}
 
