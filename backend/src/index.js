@@ -32,14 +32,12 @@ const PORT = 3005;
 
 const wsServer = new ws.Server({noServer: true});
 wsServer.on('connection', socket => {
-    console.log("someone connected")
 
     socket.on('message', async (data) => {
         const dat = JSON.parse(data.toString());
 
 
         const res = await client1.expire(dat.cookie, 6)
-        console.log('ping with ' + res);
         socket.send(`${res}`)
     })
 });
@@ -62,7 +60,6 @@ app.post("/init", async (req, res) => {
     time = `${time.getUTCHours()}:${time.getUTCMinutes()}:${time.getUTCSeconds()}`
     await pool.query('INSERT INTO connection(conn_id, ip_addr, friend_emails, friend_discords, time_connected, site_id) VALUES ($1::varchar, $2::varchar, ARRAY[]::text[], ARRAY[]::text[], $3::time, $4::int)', [conn_id, ip, time, siteID])
 
-    console.log('new user connected with ip ' + ip + ' at time ' + time);
 
     let location;
 
@@ -74,7 +71,6 @@ app.post("/init", async (req, res) => {
             loc_res = await loc_res.json();
             location = `${loc_res.country}/${loc_res.regionName}`
         }catch(e){
-            console.log(e)
             location = "error."
         }
     }
@@ -131,13 +127,11 @@ app.post('/friends', async (req, res) => {
 client2.subscribe('__keyevent@0__:expired', async (message) => {
     let conn = await pool.query('SELECT time_connected FROM connection WHERE conn_id = $1::varchar', [message]);
     if(conn.rows.length === 0) {
-        console.log("someone unexpected happened: index.js:86");
         return;
     }
 
     const now = new Date();
     const time = `${now.getUTCHours()}:${now.getUTCMinutes()}:${now.getUTCSeconds()}`
-    console.log('connection expired at ' + time);
     await pool.query('UPDATE connection SET time_disconnected = $1::time WHERE conn_id = $2::varchar', [time, message]);
 });
 

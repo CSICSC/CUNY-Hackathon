@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  redis_cache:
+    image: redis
+    networks:
+      - host
+  backend:
+    build: ./backend
+    networks:
+      - host
+  frontend1:
+    build: ./frontend1
+    networks:
+      - host
