@@ -2,17 +2,10 @@ version: '3.8'
 services:
   redis_cache:
     image: redis
-    networks:
-      - cunyhacks-net
+    network_mode: host
   backend:
     build: ./backend
-    networks:
-      - cunyhacks-net
+    network_mode: host
   frontend1:
     build: ./frontend1
-    networks:
-      - cunyhacks-net
-
-networks:
-  cunyhacks-net:
-    driver: host
+    network_mode: host
