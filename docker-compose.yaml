@@ -3,12 +3,16 @@ services:
   redis_cache:
     image: redis
     networks:
-      - host
+      - cunyhacks-net
   backend:
     build: ./backend
     networks:
-      - host
+      - cunyhacks-net
   frontend1:
     build: ./frontend1
     networks:
-      - host
+      - cunyhacks-net
+
+networks:
+  cunyhacks-net:
+    driver: host
