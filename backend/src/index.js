@@ -3,8 +3,8 @@ const ws = require("ws");
 const { Pool } = require("pg");
 const cors = require('cors')
 const { v4: uuid } = require('uuid');
-const {createClient} = require('redis')
-require('dotenv').config()
+const {createClient} = require('redis');
+require('dotenv').config();
 
 const app = express();
 const client1 = createClient();
@@ -28,7 +28,7 @@ const pool = new Pool({
 app.use(cors());
 app.use(express.json())
 
-const PORT = 3005;
+const PORT = process.env.PORT || 3005;
 
 const wsServer = new ws.Server({noServer: true});
 wsServer.on('connection', socket => {
