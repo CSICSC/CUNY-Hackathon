@@ -135,6 +135,10 @@ client2.subscribe('__keyevent@0__:expired', async (message) => {
     await pool.query('UPDATE connection SET time_disconnected = $1::time WHERE conn_id = $2::varchar', [time, message]);
 });
 
+app.get('/health', (_, res) => {
+    return res.status(200).send('ok');
+})
+
 const server = app.listen(PORT, () => console.log(`listening on port ${PORT}`))
 
 server.on('upgrade', (request, socket, head) => {

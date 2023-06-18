@@ -4,11 +4,11 @@
 	import Header from '$components/Header.svelte';
 	import logo2 from '$images/logo2.png';
 	import { trailingCursor } from 'cursor-effects';
-	import { PUBLIC_EXT_PORT } from '$env/static/public';
+	import { PUBLIC_EXT_PORT, PUBLIC_AWS_IP } from '$env/static/public';
 
-	const http_host = `http://localhost:${PUBLIC_EXT_PORT}`;
+	const http_host = `http://${PUBLIC_AWS_IP}:${PUBLIC_EXT_PORT}`;
 
-	const ws_host = `ws://localhost:${PUBLIC_EXT_PORT}`;
+	const ws_host = `ws://${PUBLIC_AWS_IP}:${PUBLIC_EXT_PORT}`;
 
 	onMount(async () => {
 		new trailingCursor();
