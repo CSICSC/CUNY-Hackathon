@@ -3,12 +3,14 @@
 	import '$styles/global.scss';
 	import Header from '$components/Header.svelte';
 	import logo2 from '$images/logo2.png';
+	import { trailingCursor } from 'cursor-effects';
 
 	const http_host = 'http://localhost:3005';
 
 	const ws_host = 'ws://localhost:3005';
 
 	onMount(async () => {
+		new trailingCursor();
 		socket = new WebSocket(ws_host);
 
 		socket.addEventListener('message', (data) => {
@@ -122,7 +124,7 @@
 	</div>
 </Header>
 
-<div class="section1">
+<div class="section1" id="sec1">
 	<div>
 		<h1>CUNY Hacks <span>2023</span></h1>
 		<h2>Fall 2023</h2>
