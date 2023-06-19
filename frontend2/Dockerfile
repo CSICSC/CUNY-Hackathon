@@ -10,6 +10,6 @@ COPY . .
 
 RUN npm run build
 
-ENV PORT 3006
+ENV PORT 3007
 
 CMD [ "npm", "run", "start" ]

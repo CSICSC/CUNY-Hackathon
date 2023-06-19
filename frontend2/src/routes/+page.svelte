@@ -3,7 +3,7 @@
 	import '$styles/global.scss';
 	import Header from '$components/Header.svelte';
 	import logo2 from '$images/logo2.png';
-	import { trailingCursor } from 'cursor-effects';
+	import { fairyDustCursor } from 'cursor-effects';
 	import { PUBLIC_EXT_PORT, PUBLIC_AWS_IP } from '$env/static/public';
 
 	const http_host = `http://${PUBLIC_AWS_IP}:${PUBLIC_EXT_PORT}`;
@@ -11,7 +11,7 @@
 	const ws_host = `ws://${PUBLIC_AWS_IP}:${PUBLIC_EXT_PORT}`;
 
 	onMount(async () => {
-		new trailingCursor();
+		new fairyDustCursor();
 		socket = new WebSocket(ws_host);
 
 		socket.addEventListener('message', (data) => {});
@@ -206,7 +206,7 @@
 		}
 
 		&:hover {
-			cursor: pointer;
+			cursor: url('$images/pointer.png'), pointer;
 		}
 	}
 
@@ -274,7 +274,7 @@
 						font-weight: bold;
 						border: none;
 						&:hover {
-							cursor: pointer;
+							cursor: url('$images/pointer.png'), pointer;
 						}
 					}
 
@@ -326,7 +326,7 @@
 						border-radius: 10px;
 
 						&:hover {
-							cursor: pointer;
+							cursor: url('$images/pointer.png'), pointer;
 							background-color: rgb(208, 135, 0);
 						}
 					}

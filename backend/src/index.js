@@ -4,11 +4,17 @@ const { Pool } = require("pg");
 const cors = require('cors')
 const { v4: uuid } = require('uuid');
 const {createClient} = require('redis');
+const {subtractTimesInSeconds, sendFriendEmail, sendEmail } = require('./utilities')
+const nodemailer = require('nodemailer')
 require('dotenv').config();
 
 const app = express();
 const client1 = createClient();
 const client2 = createClient();
+
+/**
+ * Configure discord
+ */
 
 client1.connect();
 client2.connect();
@@ -35,7 +41,6 @@ wsServer.on('connection', socket => {
 
     socket.on('message', async (data) => {
         const dat = JSON.parse(data.toString());
-
 
         const res = await client1.expire(dat.cookie, 6)
         socket.send(`${res}`)
@@ -81,6 +86,8 @@ app.post("/init", async (req, res) => {
     client1.set(conn_id, 1);
     client1.expire(conn_id, 6);
 
+    console.log(`LOG: initial connection from ${conn_id} in ${location} with ip ${ip} on ${time} at the date ${new Date()}`);
+
     return res.send({conn_id});
 });
 
@@ -90,6 +97,7 @@ app.post('/input', async (req, res) => {
     if(type === 'email'){
         try{
             await pool.query('UPDATE connection SET email = $1::varchar WHERE conn_id = $2::varchar', [input, cookie]);
+            sendEmail(input)
         }catch(e) {
             console.log(e);
         }
@@ -101,6 +109,8 @@ app.post('/input', async (req, res) => {
         }
     }
 
+    console.log(`LOG: input of type ${type} received as ${input} from ${cookie}`);
+
     return res.send();
 });
 
@@ -110,6 +120,7 @@ app.post('/friends', async (req, res) => {
     if(type === 'email'){
         try{
             await pool.query('UPDATE connection SET friend_emails = ARRAY_APPEND(friend_emails, $1::text) WHERE conn_id = $2::varchar', [input, cookie]);
+            sendFriendEmail(input);
         }catch(e) {
             console.log(e);
         }
@@ -121,6 +132,8 @@ app.post('/friends', async (req, res) => {
         }
     }
 
+    console.log(`LOG: friend of type ${type} received as ${input} from ${cookie}`);
+
     return res.send();
 })
 
@@ -130,9 +143,16 @@ client2.subscribe('__keyevent@0__:expired', async (message) => {
         return;
     }
 
+
     const now = new Date();
     const time = `${now.getUTCHours()}:${now.getUTCMinutes()}:${now.getUTCSeconds()}`
-    await pool.query('UPDATE connection SET time_disconnected = $1::time WHERE conn_id = $2::varchar', [time, message]);
+
+    const secondsResult = subtractTimesInSeconds(time,  conn.rows[0].time_connected);
+
+    pool.query('UPDATE connection SET time_disconnected = $1::time WHERE conn_id = $2::varchar', [time, message]);
+    pool.query('UPDATE site_data SET time_spent = ARRAY_APPEND(time_spent, $1::integer) WHERE site_id = $2::integer', [secondsResult, conn.rows[0].site_id])
+
+    console.log(`LOG: connection ended with ${message} on ${time} and date ${now}`);
 });
 
 app.get('/health', (_, res) => {
