@@ -40,7 +40,7 @@
 	let selected = 'email';
 
 	let textInput = '';
-	const appID = 1;
+	const appID = 2;
 	let self_email = false;
 	let friendly = false;
 	let throw_invalid_email_error = false;

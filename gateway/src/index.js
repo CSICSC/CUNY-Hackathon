@@ -12,19 +12,17 @@ const servers = [
     { host: 'localhost', port: 3002 }
 ]
 
-let currentServer = 0;
-
 gateway.use(session({
     secret: process.env.KEY,
     resave: false,
     saveUninitialized: true
-}))
+}));
+
 gateway.use(cors());
 gateway.use((req, res) => {
 
-    console.log(req.session)
-    if (req.session.currentServer == undefined) {
-        req.session.currentServer = Math.floor(Math.random() * servers.length);
+    if (!req.session.currentServer) {
+        req.session.currentServer = Math.floor(Math.random() * servers.length)
     }
 
     const targetServer = servers[req.session.currentServer];
