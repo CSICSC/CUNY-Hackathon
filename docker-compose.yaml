@@ -6,6 +6,12 @@ services:
   backend:
     build: ./backend
     network_mode: host
+  gateway:
+    build: ./gateway
+    network_mode: host
   frontend1:
+    build: ./frontend1
+    network_mode: host
+  frontend2:
     build: ./frontend1
     network_mode: host

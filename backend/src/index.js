@@ -5,7 +5,6 @@ const cors = require('cors')
 const { v4: uuid } = require('uuid');
 const {createClient} = require('redis');
 const {subtractTimesInSeconds, sendFriendEmail, sendEmail } = require('./utilities')
-const nodemailer = require('nodemailer')
 require('dotenv').config();
 
 const app = express();
@@ -48,9 +47,6 @@ wsServer.on('connection', socket => {
 });
 
 app.post("/init", async (req, res) => {
-    /**
-     * Backend handles the caching of unique ids.
-     */
     const { siteID } = req.body;
     let site = await pool.query('SELECT * from site_data WHERE site_id = $1::int', [siteID]);
     site = site.rows[0];

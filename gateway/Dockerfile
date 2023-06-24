@@ -8,8 +8,6 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build
+ENV PORT 80
 
-ENV PORT 3002
-
-CMD [ "npm", "run", "start" ]
+CMD ["npm", "run", "start"]

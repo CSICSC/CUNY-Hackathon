@@ -2,7 +2,7 @@ import { handler } from './build/handler.js';
 import express from 'express';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3002;
 
 app.use(handler);
 
