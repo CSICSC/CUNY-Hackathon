@@ -13,5 +13,5 @@ services:
     build: ./frontend1
     network_mode: host
   frontend2:
-    build: ./frontend1
+    build: ./frontend2
     network_mode: host
