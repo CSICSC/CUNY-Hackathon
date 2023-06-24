@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require('cors');
 const httpProxy = require('http-proxy')
+const session = require('express-session');
 require('dotenv').config();
 
 const gateway = express();
@@ -13,15 +14,21 @@ const servers = [
 
 let currentServer = 0;
 
+gateway.use(session({
+    secret: process.env.KEY,
+    resave: false,
+    saveUninitialized: true
+}))
 gateway.use(cors());
 gateway.use((req, res) => {
 
-    if (!req.session.currentServer) {
+    console.log(req.session)
+    if (req.session.currentServer == undefined) {
         req.session.currentServer = Math.floor(Math.random() * servers.length);
     }
 
     const targetServer = servers[req.session.currentServer];
-    console.log(`LOG(proxy): routing to ${targetServer}`)
+    console.log(`LOG(proxy): routing to ${req.session.currentServer}`)
 
     proxy.web(req, res, {target: `http://${targetServer.host}:${targetServer.port}`});
 })
