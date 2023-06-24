@@ -55,4 +55,32 @@
 			}
 		}
 	}
+
+	// phones
+	@media (min-width: 375px) and (max-width: 430px) {
+		.nav-links {
+			flex-grow: 1;
+			display: flex;
+			justify-content: flex-end;
+			margin-right: 10%;
+			ul {
+				display: flex;
+				justify-content: space-around;
+				width: 60%;
+
+				li {
+					font-size: 5px;
+					font-weight: bold;
+					color: red;
+					list-style-type: none;
+					text-transform: uppercase;
+
+					&:hover {
+						cursor: pointer;
+						color: #233dff;
+					}
+				}
+			}
+		}
+	}
 </style>

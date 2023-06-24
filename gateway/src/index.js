@@ -17,6 +17,7 @@ gateway.use(cors());
 gateway.use((req, res) => {
     const targetServer = servers[currentServer];
     currentServer = (currentServer + 1)&servers.length
+    console.log(`LOG(proxy): routing to ${currentServer}`)
     proxy.web(req, res, {target: `http://${targetServer.host}:${targetServer.port}`});
 })
 

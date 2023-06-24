@@ -334,4 +334,8 @@
 			}
 		}
 	}
+
+	// phones
+	@media (min-width: 375px) and (max-width: 430px) {
+	}
 </style>
