@@ -1,16 +1,47 @@
+<script>
+	import { onMount } from 'svelte';
+
+	let screen_type = '';
+	onMount(() => {
+		function updateScreenSize() {
+			const width = window.innerWidth;
+			const height = window.innerHeight;
+			screen_type =
+				width < 480 && height > width
+					? 'phone(portrait)'
+					: height < 480 && width > height
+					? 'phone(landscape)'
+					: width < 1024 && height > width
+					? 'tablet(portrait)'
+					: height < 1024 && width > height
+					? 'tablet(landscape)'
+					: 'computer';
+		}
+		updateScreenSize();
+
+		window.addEventListener('resize', updateScreenSize);
+
+		return () => {
+			window.removeEventListener('resize', updateScreenSize);
+		};
+	});
+</script>
+
 <nav>
 	<div class="site-id">
 		<slot>
 			<h1>Site ID goes here</h1>
 		</slot>
 	</div>
-	<div class="nav-links">
-		<ul>
-			<li on:click={() => window.alert('Coming soon...')}>tracks</li>
-			<li on:click={() => window.alert('Coming soon...')}>sponsors</li>
-			<li on:click={() => window.alert('Coming soon...')}>faq</li>
-		</ul>
-	</div>
+	{#if screen_type != 'phone(portrait)' && screen_type != 'phone(landscape)' && screen_type != 'tablet(portrait)' && screen_type != 'tablet(landscape)'}
+		<div class="nav-links">
+			<ul>
+				<li on:click={() => window.alert('Coming soon...')} on:keypress={() => {}}>tracks</li>
+				<li on:click={() => window.alert('Coming soon...')} on:keypress={() => {}}>sponsors</li>
+				<li on:click={() => window.alert('Coming soon...')} on:keypress={() => {}}>faq</li>
+			</ul>
+		</div>
+	{/if}
 </nav>
 
 <style lang="scss">
@@ -53,6 +84,34 @@
 					}
 				}
 			}
+		}
+	}
+
+	// tablet (landscape)
+	@media screen and (min-device-height: 768px) and (max-device-height: 1024px) {
+		nav {
+			height: 9vh;
+		}
+	}
+
+	// tablet (portrait)
+	@media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+		nav {
+			height: 7vh;
+		}
+	}
+
+	// phones (portrait)
+	@media screen and (max-device-width: 480px) and (orientation: portrait) {
+		nav {
+			height: 8vh !important;
+		}
+	}
+
+	// phones (landscape)
+	@media screen and (max-device-height: 480px) and (orientation: landscape) {
+		nav {
+			height: 15vh;
 		}
 	}
 </style>

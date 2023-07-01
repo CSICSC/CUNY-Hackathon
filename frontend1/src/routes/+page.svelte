@@ -9,8 +9,12 @@
 	const http_host = `http://${PUBLIC_AWS_IP}:${PUBLIC_EXT_PORT}`;
 
 	const ws_host = `ws://${PUBLIC_AWS_IP}:${PUBLIC_EXT_PORT}`;
+	let screen_type = '';
 
 	onMount(async () => {
+		const width = window.innerWidth;
+		screen_type = width < 480 ? 'phone(portrait)' : 'computer';
+
 		new trailingCursor();
 		socket = new WebSocket(ws_host);
 
@@ -335,7 +339,335 @@
 		}
 	}
 
-	// phones
-	@media (min-width: 375px) and (max-width: 430px) {
+	// tablet (landscape)
+	@media screen and (min-device-height: 768px) and (max-device-height: 1024px) {
+		.header-container {
+			img {
+				width: 50px;
+			}
+
+			h1 {
+				font-family: 'Gasoek One';
+				font-size: 30px;
+				span {
+					color: $main-blue;
+					font-family: 'Gasoek One';
+				}
+			}
+		}
+
+		.section1 {
+			> div {
+				height: 60%;
+				width: 60%;
+				box-shadow: 10px 10px 10px #0000001e;
+
+				h1 {
+					margin-top: 5%;
+					font-size: 50px;
+				}
+
+				h2 {
+					margin-top: 5%;
+					font-size: 40px;
+				}
+
+				> div {
+					margin-top: 10%;
+					width: 80%;
+
+					p {
+						font-size: 35px;
+						font-family: Arial, Helvetica, sans-serif;
+						font-weight: bold;
+					}
+
+					.container {
+						margin-top: 10px;
+
+						button {
+							padding: 10px 25px 0px 25px;
+							border-radius: 10px 10px 0px 0px;
+							font-size: 20px;
+						}
+					}
+
+					.input-cont {
+						width: 95%;
+						height: 120px !important;
+						padding-left: 20px;
+						border-radius: 0px 10px 10px 10px;
+
+						input {
+							width: 85%;
+							height: 35px;
+							font-size: 15px;
+							border-radius: 5px;
+							border: 1px solid #000;
+							padding-left: 10px;
+						}
+
+						button {
+							margin-top: 10px;
+							background-color: orange;
+							font-size: 15px;
+							padding: 10px 15px 10px 15px;
+							border-radius: 10px;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// tablet (portrait)
+	@media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+		.header-container {
+			img {
+				width: 50px;
+			}
+
+			h1 {
+				font-family: 'Gasoek One';
+				font-size: 30px;
+				span {
+					color: $main-blue;
+					font-family: 'Gasoek One';
+				}
+			}
+		}
+
+		.section1 {
+			> div {
+				height: 40%;
+				width: 70%;
+				box-shadow: 10px 10px 10px #0000001e;
+
+				h1 {
+					margin-top: 5%;
+					font-size: 45px;
+				}
+
+				h2 {
+					margin-top: 5%;
+					font-size: 35px;
+				}
+
+				> div {
+					margin-top: 10%;
+					width: 80%;
+
+					p {
+						font-size: 30px;
+						font-family: Arial, Helvetica, sans-serif;
+						font-weight: bold;
+					}
+
+					.container {
+						margin-top: 10px;
+
+						button {
+							padding: 10px 25px 0px 25px;
+							border-radius: 10px 10px 0px 0px;
+							font-size: 18px;
+						}
+					}
+
+					.input-cont {
+						width: 95%;
+						height: 100px !important;
+						padding-left: 20px;
+						border-radius: 0px 10px 10px 10px;
+
+						input {
+							width: 85%;
+							height: 30px;
+							font-size: 15px;
+							border-radius: 5px;
+							border: 1px solid #000;
+							padding-left: 10px;
+						}
+
+						button {
+							margin-top: 7px;
+							background-color: orange;
+							font-size: 14px;
+							padding: 7px 14px 7px 14px;
+							border-radius: 7px;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// phones (portrait)
+	@media screen and (max-width: 480px) and (orientation: portrait) {
+		.header-container {
+			display: inherit;
+			align-items: inherit;
+
+			img {
+				width: 35px;
+			}
+
+			h1 {
+				font-family: 'Gasoek One';
+				font-size: 18px;
+				span {
+					color: $main-blue;
+					font-family: 'Gasoek One';
+				}
+			}
+
+			&:hover {
+				cursor: pointer;
+			}
+		}
+
+		.section1 {
+			> div {
+				height: 45%;
+				width: 80%;
+				box-shadow: 10px 10px 10px #0000001e;
+
+				h1 {
+					margin-top: 10%;
+					font-size: 25px;
+				}
+
+				h2 {
+					margin-top: 10%;
+					font-size: 20px;
+				}
+
+				> div {
+					margin-top: 17%;
+					width: 80%;
+
+					p {
+						font-size: 20px;
+						font-family: Arial, Helvetica, sans-serif;
+						font-weight: bold;
+					}
+
+					.container {
+						margin-top: 10px;
+
+						button {
+							padding: 5px 15px 0px 15px;
+							border-radius: 5px 5px 0px 0px;
+							font-size: 12px;
+						}
+					}
+
+					.input-cont {
+						width: 95%;
+						height: 90px !important;
+						padding-left: 20px;
+						border-radius: 0px 10px 10px 10px;
+
+						input {
+							width: 85%;
+							height: 30px;
+							font-size: 12px;
+							border-radius: 5px;
+							border: 1px solid #000;
+							padding-left: 10px;
+						}
+
+						button {
+							margin-top: 5px;
+							background-color: orange;
+							font-size: 12px;
+							padding: 5px 10px 5px 10px;
+							border-radius: 5px;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// phone (landscape)
+	@media screen and (max-device-height: 480px) and (orientation: landscape) {
+		.header-container {
+			img {
+				width: 40px;
+			}
+
+			h1 {
+				font-family: 'Gasoek One';
+				font-size: 25px;
+				span {
+					color: $main-blue;
+					font-family: 'Gasoek One';
+				}
+			}
+		}
+
+		.section1 {
+			> div {
+				margin-top: 50px;
+				height: 70%;
+				width: 50%;
+				box-shadow: 10px 10px 10px #0000001e;
+
+				h1 {
+					margin-top: 5%;
+					font-size: 30px;
+				}
+
+				h2 {
+					margin-top: 5%;
+					font-size: 17px;
+				}
+
+				> div {
+					margin-top: 5%;
+					width: 80%;
+
+					p {
+						font-size: 17px;
+						font-family: Arial, Helvetica, sans-serif;
+						font-weight: bold;
+					}
+
+					.container {
+						margin-top: 10px;
+
+						button {
+							padding: 5px 15px 0px 15px;
+							border-radius: 5px 5px 0px 0px;
+							font-size: 12px;
+						}
+					}
+
+					.input-cont {
+						width: 95%;
+						height: 70px !important;
+						padding-left: 20px;
+						border-radius: 0px 10px 10px 10px;
+
+						input {
+							width: 85%;
+							height: 25px;
+							font-size: 11px;
+							border-radius: 5px;
+							border: 1px solid #000;
+							padding-left: 10px;
+						}
+
+						button {
+							margin-top: 5px;
+							background-color: orange;
+							font-size: 10px;
+							padding: 4px 8px 4px 8px;
+							border-radius: 4px;
+						}
+					}
+				}
+			}
+		}
 	}
 </style>
