@@ -3,6 +3,7 @@ const cors = require('cors');
 const httpProxy = require('http-proxy')
 const session = require('express-session');
 require('dotenv').config();
+const https = require('https');
 
 const gateway = express();
 const proxy = httpProxy.createProxyServer();
@@ -11,6 +12,11 @@ const servers = [
     { host: 'localhost', port: 3001 },
     { host: 'localhost', port: 3002 }
 ]
+
+const options = {
+    key: fs.readFileSync(process.env.PKEY),
+    cert: fs.readFileSync(process.env.CERT)
+}
 
 gateway.use(session({
     secret: process.env.KEY,
@@ -33,4 +39,5 @@ gateway.use((req, res) => {
 
 const PORT = process.env.PORT || 80;
 
-gateway.listen(PORT, () => console.log(`listening on port ${PORT}`))
+https.createServer(options, gateway)
+    .listen(PORT, () => console.log(`listening on port ${PORT}`))
