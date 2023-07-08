@@ -8,6 +8,6 @@ RUN npm install
 
 COPY . .
 
-ENV PORT 80
+ENV PORT 443
 
 CMD ["npm", "run", "start"]

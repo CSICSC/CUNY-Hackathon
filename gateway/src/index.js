@@ -38,7 +38,7 @@ gateway.use((req, res) => {
     proxy.web(req, res, {target: `http://${targetServer.host}:${targetServer.port}`});
 })
 
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 443;
 
 https.createServer(options, gateway)
     .listen(PORT, () => console.log(`listening on port ${PORT}`))
