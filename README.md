@@ -4,11 +4,13 @@
     </a>
 </p>
 
-# CUNY Hackathon
+# CUNY Hacks
 
-The CUNY Hackathon website repository
+The CUNY Hacks website repository
 
 ## Design Philosophy
+
+The CUNY Hacks websites was designed to implement the **lean methodology** described by Eric Ries.
 
 ## Design Architecture
 
