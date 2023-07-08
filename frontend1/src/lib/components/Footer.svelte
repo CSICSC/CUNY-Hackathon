@@ -32,4 +32,22 @@
 			}
 		}
 	}
+
+	// phones (portrait)
+	@media screen and (max-width: 480px) and (orientation: portrait) {
+		div {
+			p {
+				font-size: 12px;
+			}
+		}
+	}
+
+	// phone (landscape)
+	@media screen and (max-device-height: 480px) and (orientation: landscape) {
+		div {
+			p {
+				font-size: 8px;
+			}
+		}
+	}
 </style>
