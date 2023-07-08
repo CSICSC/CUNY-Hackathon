@@ -1,8 +1,8 @@
 <script>
 	import { onMount } from 'svelte';
 	import '$styles/global.scss';
-	import Header from '$components/Header.svelte';
-	import logo2 from '$images/logo2.png';
+	import { Header, Footer } from '$components';
+	import logo from '$images/logo3.png';
 	import { fairyDustCursor } from 'cursor-effects';
 	import { PUBLIC_EXT_PORT, PUBLIC_AWS_IP } from '$env/static/public';
 
@@ -118,7 +118,7 @@
 
 <Header>
 	<div class="header-container">
-		<img class="logo" src={logo2} alt="logo" />
+		<img class="logo" src={logo} alt="logo" />
 		<h1 class="site-id">CUNY Hacks <span>2023</span></h1>
 	</div>
 </Header>
@@ -185,6 +185,8 @@
 	</div>
 </div>
 
+<Footer />
+
 <style lang="scss">
 	@import '$styles/variables';
 
@@ -193,7 +195,7 @@
 		align-items: inherit;
 
 		img {
-			width: 50px;
+			width: 125px;
 		}
 
 		h1 {
@@ -206,7 +208,7 @@
 		}
 
 		&:hover {
-			cursor: url('$images/pointer.png'), pointer;
+			cursor: pointer;
 		}
 	}
 
@@ -274,7 +276,7 @@
 						font-weight: bold;
 						border: none;
 						&:hover {
-							cursor: url('$images/pointer.png'), pointer;
+							cursor: pointer;
 						}
 					}
 
@@ -326,7 +328,7 @@
 						border-radius: 10px;
 
 						&:hover {
-							cursor: url('$images/pointer.png'), pointer;
+							cursor: pointer;
 							background-color: rgb(208, 135, 0);
 						}
 					}
@@ -339,7 +341,7 @@
 	@media screen and (min-device-height: 768px) and (max-device-height: 1024px) {
 		.header-container {
 			img {
-				width: 50px;
+				width: 125px;
 			}
 
 			h1 {
@@ -420,7 +422,7 @@
 	@media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
 		.header-container {
 			img {
-				width: 50px;
+				width: 120px;
 			}
 
 			h1 {
@@ -504,7 +506,7 @@
 			align-items: inherit;
 
 			img {
-				width: 35px;
+				width: 75px;
 			}
 
 			h1 {
@@ -589,7 +591,8 @@
 	@media screen and (max-device-height: 480px) and (orientation: landscape) {
 		.header-container {
 			img {
-				width: 40px;
+				margin-top: 15px;
+				width: 100px;
 			}
 
 			h1 {

@@ -1,6 +1,6 @@
 <p align="center">
     <a src="#">
-        <img src='frontend1/src/assets/images/logo1.png' width="150px"/>
+        <img src='frontend1/src/assets/images/logo3.png' width="150px"/>
     </a>
 </p>
 
