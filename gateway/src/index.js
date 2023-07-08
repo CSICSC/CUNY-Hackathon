@@ -4,6 +4,7 @@ const httpProxy = require('http-proxy')
 const session = require('express-session');
 require('dotenv').config();
 const https = require('https');
+const fs = require("node:fs")
 
 const gateway = express();
 const proxy = httpProxy.createProxyServer();
