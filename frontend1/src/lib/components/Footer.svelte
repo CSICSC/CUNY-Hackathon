@@ -1,53 +1,16 @@
-<div>
-	<p>
-		made with 🫀 by <a href="https://github.com/CSICSC" target="_blank" rel="noopener noreferrer"
-			>CSI Computer Science Club</a
+<div class="bg-stone-800 flex justify-center items-center h-fit py-2">
+	<p class="text-sm md:text-lg text-zinc-300 font-sans">
+		made with ❤️ by <a
+			class="text-sm md:text-lg text-zinc-300 hover:text-teal-300 font-sans"
+			href="https://github.com/CSICSC"
+			target="_blank"
+			rel="noopener noreferrer">CSI Computer Science Club</a
 		>.
-		<a href="https://github.com/CSICSC/CUNY-Hackathon" target="_blank" rel="noopener noreferrer"
-			>⌨️ Source</a
+		<a
+			class="text-sm md:text-lg text-zinc-300 hover:text-teal-300 font-sans"
+			href="https://github.com/CSICSC/CUNY-Hackathon"
+			target="_blank"
+			rel="noopener noreferrer">⌨️ Source</a
 		>.
 	</p>
 </div>
-
-<style lang="scss">
-	@import '$styles/variables';
-
-	div {
-		background-color: #343434;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		height: 3vh;
-
-		p {
-			color: antiquewhite;
-			font-size: 20px;
-
-			a {
-				color: antiquewhite;
-
-				&:hover {
-					color: aquamarine;
-				}
-			}
-		}
-	}
-
-	// phones (portrait)
-	@media screen and (max-width: 480px) and (orientation: portrait) {
-		div {
-			p {
-				font-size: 12px;
-			}
-		}
-	}
-
-	// phone (landscape)
-	@media screen and (max-device-height: 480px) and (orientation: landscape) {
-		div {
-			p {
-				font-size: 8px;
-			}
-		}
-	}
-</style>
